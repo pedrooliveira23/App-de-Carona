@@ -4,7 +4,9 @@ block content
   h1= title
   p Welcome to #{title}
   a(href='/auth/facebook') Facebook
+  br
+  a(href='/auth/google') Google
   if !user
     p Faça o Login
   else
-    p Bem-vindo, #{user.displayName}
+    p Bem-vindo, #{user.displayName}#{user.id}

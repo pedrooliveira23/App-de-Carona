@@ -19,13 +19,13 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['email'] })
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {successRedirect: '/', failureRedirect: '/login'}),
     function (req, res) {
-        res.redirect('/');
+        res.redirect('/cadastro');
     });
 
 router.get('/auth/google/callback',
     passport.authenticate('google', {successRedirect: '/', failureRedirect: '/login'}),
     function (req, res) {
-        res.redirect('/');
+        res.redirect('/cadastro');
     });
 
 router.get('/logout', function (req, res) {

@@ -1,12 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  a(href='/auth/facebook') Facebook
-  br
-  a(href='/auth/google') Google
-  if !user
-    p Faça o Login
-  else
-    p Bem-vindo, #{user.displayName}#{user.id}
+    .container.center
+
+        .row
+            form.mg-btm
+                h3.heading-desc
+                    | Fazer Login
+                i.material-icons drive_eta
+                .social-box
+                    .row.mg-btm
+                        .col-md-12
+                            a(href='/auth/facebook')
+                                img.media-object.img-responsive.img-thumbnail(src='img/facebookAuth.png')
+                            .mg-btm
+                            a(href='/auth/google')
+                                img.media-object.img-responsive.img-thumbnail(src='img/googleAuth.png')

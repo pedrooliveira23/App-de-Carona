@@ -1,7 +1,15 @@
 doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+head
+
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
+
+    link(type='text/css' rel='stylesheet' href='css/materialize.min.css' media='screen,projection')
+    link(type='text/css' rel='stylesheet' href='css/formLogin.css' media='screen,projection')
+
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+
+    body
+        block content
+        script(type='text/javascript' src='js/materialize.min.js')
+        script(type='text/javascript' src='https://code.jquery.com/jquery-3.4.1.min.js')
+        script(async='' defer='' crossorigin='anonymous' src='https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v5.0&appId=537787250339585&autoLogAppEvents=1')

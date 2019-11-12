@@ -7,7 +7,6 @@ block content
             form.mg-btm
                 h3.heading-desc
                     | Fazer Login
-                i.material-icons drive_eta
                 .social-box
                     .row.mg-btm
                         .col-md-12
@@ -16,3 +15,14 @@ block content
                             .mg-btm
                             a(href='/auth/google')
                                 img.media-object.img-responsive.img-thumbnail(src='img/googleAuth.png')
+                                p
+                                    label
+                                        input.with-gap(name='group1' type='radio' checked='')
+                                        span
+                                            i.material-icons drive_eta
+                                            | Motorista
+                                    label
+                                        input.with-gap(name='group1' type='radio')
+                                        span
+                                            i.material-icons airline_seat_recline_normal
+                                            | Passageiro

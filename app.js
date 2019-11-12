@@ -60,7 +60,8 @@ passport.deserializeUser(function (obj, done) {
 passport.use(new FacebookStrategy({
         clientID: facebookAuth.facebook_api_key,
         clientSecret: facebookAuth.facebook_api_secret,
-        callbackURL: facebookAuth.callback_url
+        callbackURL: facebookAuth.callback_url,
+        profileFields: ['id', 'displayName', 'link', 'photos', 'emails']
     },
     function (accessToken, refreshToken, profile, done) {
         process.nextTick(function () {

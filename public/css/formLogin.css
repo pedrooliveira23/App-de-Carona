@@ -1,17 +1,5 @@
-.container {
-    background-color: #f7f7f7;
-    height: 100%;
-}
 .social-box{
     padding: 38px;
-}
-.social-box a{
-    font-weight:bold;
-    font-size:18px;
-}
-.social-box a i{
-    font-weight:bold;
-    font-size:20px;
 }
 .heading-desc{
     font-size:20px;

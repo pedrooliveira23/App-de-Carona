@@ -17,15 +17,15 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['https://ww
 
 
 router.get('/auth/facebook/callback',
-    passport.authenticate('facebook', {successRedirect: '/cadastro/', failureRedirect: '/'}),
+    passport.authenticate('facebook', {successRedirect: 'http://localhost:3001/', failureRedirect: '/'}),
     function (req, res) {
-        res.redirect('/cadastro');
+        res.redirect('/', {userId : req.user.id});
     });
 
 router.get('/auth/google/callback',
-    passport.authenticate('google', {successRedirect: '/cadastro/', failureRedirect: '/'}),
+    passport.authenticate('google', {successRedirect: 'http://localhost:3001/', failureRedirect: '/'}),
     function (req, res) {
-        res.redirect('/cadastro');
+        res.redirect('/');
     });
 
 router.get('/logout', function (req, res) {

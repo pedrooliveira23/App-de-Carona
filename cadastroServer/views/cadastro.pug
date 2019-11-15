@@ -1,4 +1,4 @@
-extends layout
+extends ../../loginServer/views/layout
 
 block content
     .container.center
@@ -10,9 +10,9 @@ block content
                     .row
                     .col-md-23
                     p.left-align.mg-btm Dados de Perfil
-                    img.media-object.img-responsivel(src='http://graph.facebook.com/' + user.id + '/picture?type')
+                    img.media-object.img-responsivel(src=user.photo_url)
                     script.
-                         $.getJSON('https://people.googleapis.com/v1/people/' + user.id + '?personFields=photos&key=AIzaSyBoZtgq1yA7obytvPdVUE7ss_IdgkpcS_8', function (data) {
+                         $.getJSON('https://people.googleapis.com/v1/people/' +'?personFields=photos&key=AIzaSyBoZtgq1yA7obytvPdVUE7ss_IdgkpcS_8', function (data) {
                              $('#photo').attr("src",data[url]);
                          });
                     img#photo.media-object.img-responsivel(src='teste')
@@ -22,18 +22,18 @@ block content
                                 span
                                     | Nome Completo:
                                 //if user.displayName
-                                input.with-gap(name='group1' value=user.displayName)
+                                input.with-gap(name='group1' value=user.display_name)
                                 //else
                                     //input.with-gap(name='group1' value=user.getName())
                             label
                                 span
                                     | E-mail:
-                                input.with-gap(name='group1' value=user.emails[0].value)
+                                input.with-gap(name='group1' value=user.email)
                             label
                                 span
                                     | Celular:
                                 input.with-gap(type='tel' name='phone' pattern='([0-9]{2}) [0-9]{5}-[0-9]{4}' required='')
-                    a.btn-floating.btn-large.waves-effect.waves-light.left(href='/logout')
+                    a.btn-floating.btn-large.waves-effect.waves-light.left(href='http://localhost:3000/logout')
                         i.material-icons keyboard_arrow_left
                     a.btn-floating.btn-large.waves-effect.waves-light.right
                         i.material-icons keyboard_arrow_right

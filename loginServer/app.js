@@ -7,11 +7,13 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var session = require('express-session');
+var {Client} = require('pg');
 
 var indexRouter = require('./routes/index');
-var cadastroRouter = require('./routes/cadastro');
+var cadastroRouter = require('../cadastroServer/routes/cadastro');
 var facebookAuth = require('./configuration/FacebookAuth');
 var googleAuth = require('./configuration/GoogleAuth');
+var database = require('./configuration/database');
 
 var app = express();
 
@@ -26,7 +28,7 @@ app.use(cookieParser());
 app.use(session({secret: 'keyboard cat', key: 'sid'}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
 app.use('/cadastro', cadastroRouter);
@@ -56,16 +58,45 @@ passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
 
+let client = new Client({
+    host: database.host,
+    port: database.port,
+    user: database.username,
+    password: database.password,
+    database: database.database
+});
+
 // Autenticador do Facebook
 passport.use(new FacebookStrategy({
         clientID: facebookAuth.facebook_api_key,
         clientSecret: facebookAuth.facebook_api_secret,
         callbackURL: facebookAuth.callback_url,
-        profileFields: ['id', 'displayName', 'link', 'photos', 'emails']
+        profileFields: ['id', 'displayName', 'photos', 'emails']
     },
     function (accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
-            //Check whether the User exists or not using profile.id
+            client.connect(err => {
+                if (err) throw err;
+                else {
+                    queryDatabase();
+                }
+            });
+
+            function queryDatabase() {
+                let query = "SELECT * from user_info where id='" + profile.id + "';";
+                let insert = "INSERT into user_info(id, display_name, photo_url, email) VALUES('" + profile.id + "','" + profile.displayName + "','http://graph.facebook.com/" + profile.id + "/picture?type','" + profile.emails[0].value + "')";
+
+                client.query(query).then(res => {
+                    if (res.rows && res.rows.length === 0) {
+                        console.log(profile.id + " é um novo usuário, adicionando ao banco de dados");
+                        client.query(insert);
+                        process.exit();
+                    } else {
+                        console.log(profile.id + " já existe no bano de dados");
+                    }
+                })
+            }
+
             return done(null, profile);
         });
     }
